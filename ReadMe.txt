@@ -2,6 +2,8 @@
 
 07.05
 도로 영상(이미지의 연속)을 트래킹하는 알고리즘 오픈소스(YOLOv8과 Deep SORT)를 이용하여 구성
+파이썬 3.10 버전 사용
+
 * YOLOv8
 - 이미지에서 사람, 차량, 신호등 등 객체의 위치와 클래스(종류)를 탐지
 - bounding box, confidence score, class id를 출력
