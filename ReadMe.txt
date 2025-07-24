@@ -102,3 +102,49 @@ https://drive.google.com/file/d/11tWiihrFVCWOKkqg4_FqnicZZA_GRHkc/view
 ------------------------------
 본 코드는 학습 및 실습 목적의 공개 코드이며 자유롭게 수정 및 재배포 가능합니다.
 상업적 사용 전에는 별도 문의 바랍니다.
+
+
+07.26
+Collision Prediction System using YOLO and Optical Flow
+
+이 프로젝트는 블랙박스 영상에서 차량 객체를 탐지하고 추적하여 선형 경로 기반 충돌 예측을 수행하는 시스템입니다.
+YOLOv8을 활용한 객체 탐지, Optical Flow를 이용한 카메라 보정, 상대 속도 기반 충돌 시간 계산을 포함합니다.
+
+주요 기능
+
+- 유튜브 블랙박스 영상 자동 다운로드
+- YOLOv8 기반 차량 객체 탐지
+- Optical Flow를 통한 카메라 움직임 보정
+- 객체 추적 및 속도 계산
+- 블랙박스 차량 기준 선형 경로 기반 충돌 시간 예측
+- 운전자 반응 시간 고려한 위험 경고
+- 충돌 위험 시 로그 파일 및 프레임 저장
+
+프로젝트 파일 구조
+
+collision_prediction.py    메인 실행 파일
+collision_log.txt          충돌 예측 로그
+collision_frames/          충돌 위험 프레임 이미지 저장 폴더
+accident.mp4               다운로드된 유튜브 영상
+
+실행 방법
+
+1. Python 3.8 이상이 필요하며 인터넷 연결이 되어 있어야 합니다.
+2. python collision_prediction.py 명령으로 실행합니다.
+3. 최초 실행 시 yt-dlp, ultralytics, opencv-python, numpy 패키지가 자동으로 설치됩니다.
+
+주요 설정
+
+VIDEO_URL : 유튜브 블랙박스 영상 링크
+FPS : 영상의 초당 프레임 수
+METER_PER_PIXEL : 픽셀당 실제 거리 (미터)
+COLLISION_THRESHOLD : 충돌로 간주할 시간 임계값 (초)
+MIN_APPROACH_SPEED : 최소 상대 접근 속도 (미터 매 초)
+MAX_COLLISION_DISTANCE : 충돌 감지 최대 거리 (미터)
+
+충돌 판단 알고리즘 요약
+
+1. 블랙박스 차량 (ID 0)을 기준으로 다른 차량들과의 거리 및 상대속도를 계산합니다.
+2. 블랙박스 차량의 전방 90도 각도 안에 있는 차량만 대상으로 삼습니다.
+3. 상대 속도가 일정 기준 이상이며, 충돌 예상 시간이 임계값보다 작으면 경고를 발생시킵니다.
+4. 위험 프레임은 collision_frames 폴더에 저장되고, collision_log.txt에 기록됩니다.
